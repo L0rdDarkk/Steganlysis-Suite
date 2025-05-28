@@ -1,0 +1,253 @@
+# StegAnalysis Suite Configuration File
+# Advanced Steganography Detection and Analysis Configuration
+
+# Detection Algorithm Settings
+detection:
+  algorithms:
+    - lsb
+    - chi_square
+    - f5
+    - cnn
+    - svm
+  
+  # Detection thresholds for different algorithms
+  thresholds:
+    chi_square: 0.05          # P-value threshold for chi-square test
+    lsb_threshold: 0.7        # LSB analysis threshold
+    cnn_confidence: 0.8       # CNN model confidence threshold
+    svm_confidence: 0.75      # SVM model confidence threshold
+    f5_threshold: 0.6         # F5 detection threshold
+    entropy_threshold: 7.5    # Entropy analysis threshold
+
+# Machine Learning Model Configuration
+ml_models:
+  cnn:
+    model_path: "models/trained/cnn_stego_detector.h5"
+    input_shape: [224, 224, 3]  # Height, Width, Channels
+    batch_size: 32
+    preprocess_method: "normalize"  # normalize, standardize
+    augmentation: false
+  
+  svm:
+    model_path: "models/trained/svm_stego_detector.pkl"
+    scaler_path: "models/trained/scaler.pkl"
+    kernel: "rbf"
+    features:
+      - entropy
+      - histogram_variance
+      - dct_coefficients
+      - edge_density
+      - noise_variance
+
+# GPU Configuration
+gpu:
+  enabled: true
+  memory_growth: true
+  device: "/GPU:0"
+  allow_memory_growth: true
+  per_process_gpu_memory_fraction: 0.8
+
+# Processing Configuration
+processing:
+  max_workers: 4              # Number of parallel workers
+  chunk_size: 100             # Batch processing chunk size
+  timeout: 300                # Processing timeout in seconds
+  max_image_size: 4096        # Maximum image dimension
+  supported_formats:
+    - jpg
+    - jpeg
+    - png
+    - bmp
+    - tiff
+    - tif
+
+# Statistical Analysis Settings
+statistical_analysis:
+  histogram_bins: 256
+  entropy_window_size: 8
+  dct_block_size: 8
+  analyze_channels:
+    - red
+    - green 
+    - blue
+  edge_detection_method: "canny"
+  noise_estimation_method: "laplacian"
+
+# Forensic Analysis Configuration
+forensic_analysis:
+  extract_metadata: true
+  verify_integrity: true
+  analyze_compression: true
+  detect_modifications: true
+  signature_analysis: true
+  
+  metadata_fields:
+    - exif
+    - iptc
+    - xmp
+    - icc_profile
+  
+  hash_algorithms:
+    - md5
+    - sha1
+    - sha256
+
+# Report Generation Settings
+reports:
+  output_dir: "reports/generated"
+  template_dir: "reports/templates"
+  formats:
+    - pdf
+    - json
+    - html
+  
+  include_visualizations: true
+  include_statistical_plots: true
+  include_metadata: true
+  include_recommendations: true
+  
+  pdf_settings:
+    page_size: "A4"
+    font_family: "Arial"
+    include_charts: true
+    color_scheme: "professional"
+  
+  visualization_settings:
+    dpi: 300
+    figure_size: [10, 8]
+    color_palette: "viridis"
+
+# Data Extraction Settings
+extraction:
+  methods:
+    - lsb_sequential
+    - lsb_random
+    - dct_coefficients
+    - palette_based
+  
+  output_formats:
+    - raw_binary
+    - text
+    - image
+    - auto_detect
+  
+  recovery_attempts: 3
+  max_payload_size: 1048576  # 1MB
+
+# Training Configuration (for model development)
+training:
+  dataset_split:
+    train: 0.7
+    validation: 0.2
+    test: 0.1
+  
+  cnn_training:
+    epochs: 100
+    learning_rate: 0.001
+    batch_size: 32
+    optimizer: "adam"
+    loss_function: "binary_crossentropy"
+    early_stopping_patience: 10
+  
+  svm_training:
+    cross_validation_folds: 5
+    parameter_grid:
+      C: [0.1, 1, 10, 100]
+      gamma: [0.001, 0.01, 0.1, 1]
+      kernel: ["rbf", "linear", "poly"]
+
+# Logging Configuration
+logging:
+  level: "INFO"                    # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/steganalysis.log"
+  max_size: 10485760              # 10MB
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  module_levels:
+    detection: "INFO"
+    ml_detection: "INFO"
+    analysis: "INFO"
+    forensics: "INFO"
+    reports: "INFO"
+    gui: "WARNING"
+
+# Performance Benchmarking
+benchmarking:
+  enabled: false
+  metrics:
+    - processing_time
+    - memory_usage
+    - gpu_utilization
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+  
+  benchmark_datasets:
+    - "datasets/benchmark/boss_base"
+    - "datasets/benchmark/bows2"
+    - "datasets/benchmark/custom"
+
+# Security Settings
+security:
+  verify_file_signatures: true
+  sandbox_analysis: false
+  max_file_size: 52428800        # 50MB
+  quarantine_suspicious: false
+  
+  allowed_paths:
+    - "datasets/"
+    - "reports/"
+    - "temp/"
+  
+  blocked_extensions:
+    - exe
+    - scr
+    - bat
+    - cmd
+
+# Advanced Features
+advanced:
+  multi_algorithm_fusion: true
+  adaptive_thresholds: true
+  ensemble_methods: true
+  uncertainty_quantification: true
+  
+  research_mode:
+    enabled: false
+    save_intermediate_results: false
+    detailed_timing: false
+    memory_profiling: false
+
+# Dataset Management
+datasets:
+  auto_download: false
+  cache_enabled: true
+  cache_dir: "datasets/cache"
+  
+  sources:
+    boss_base: "http://dde.binghamton.edu/download/ImageDB/BOSSbase_1.01.zip"
+    bows2: "http://bows2.ec-lille.fr/BOWS2OrigEp3.tgz"
+  
+  validation:
+    verify_checksums: true
+    validate_labels: true
+    remove_corrupted: true
+
+# User Interface Settings
+ui:
+  theme: "light"                 # light, dark, auto
+  language: "en"                 # en, es, fr, de
+  auto_save_settings: true
+  recent_files_count: 10
+  
+  default_view: "detection"     # detection, analysis, reports
+  show_advanced_options: false
+  enable_tooltips: true
+  
+  shortcuts:
+    analyze: "Ctrl+A"
+    batch_process: "Ctrl+B"
+    generate_report: "Ctrl+R"
+    settings: "Ctrl+,"

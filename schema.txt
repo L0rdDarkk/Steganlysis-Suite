@@ -1,0 +1,86 @@
+steganalysis-suite/
+├── README.md                    # Project documentation
+├── requirements.txt             # Python dependencies with GPU support
+├── setup.py                     # Installation script
+├── main.py                      # Main entry point
+├── config.yaml                  # Configuration file
+├── 
+├── modules/                     # Core detection and analysis modules
+│   ├── __init__.py
+│   ├── detection.py             # Detection algorithms (LSB, Chi-Square, F5)
+│   ├── ml_detection.py          # CNN and SVM machine learning detection
+│   ├── extraction.py            # Data extraction and recovery
+│   ├── analysis.py              # Statistical analysis and metadata
+│   ├── forensics.py             # Forensic analysis tools
+│   └── reports.py               # Report generation (PDF/JSON)
+│
+├── gui/                         # Graphical User Interface
+│   ├── __init__.py
+│   ├── main_window.py           # Main GUI window
+│   ├── detection_tab.py         # Detection interface
+│   ├── analysis_tab.py          # Analysis interface
+│   ├── reports_tab.py           # Reports interface
+│   └── utils.py                 # GUI utilities
+│
+├── models/                      # Machine learning models and training
+│   ├── __init__.py
+│   ├── cnn_model.py             # CNN architecture and training
+│   ├── svm_model.py             # SVM model implementation
+│   ├── model_utils.py           # Model utilities and evaluation
+│   └── trained/                 # Directory for saved models
+│       ├── cnn_stego_detector.h5
+│       ├── svm_stego_detector.pkl
+│       └── scaler.pkl
+│
+├── datasets/                    # Test datasets and samples
+│   ├── images/
+│   │   ├── clean/               # Clean (non-steganographic) images
+│   │   │   ├── sample1.jpg
+│   │   │   ├── sample2.png
+│   │   │   └── ...
+│   │   ├── steganographic/      # Images with hidden data
+│   │   │   ├── lsb_hidden.png
+│   │   │   ├── f5_hidden.jpg
+│   │   │   └── ...
+│   │   └── test/                # Test images for validation
+│   │       ├── test1.jpg
+│   │       ├── test2.png
+│   │       └── ...
+│   └── metadata/                # Dataset metadata and labels
+│       ├── clean_labels.json
+│       ├── stego_labels.json
+│       └── dataset_info.json
+│
+├── reports/                     # Generated forensic reports
+│   ├── templates/               # Report templates
+│   │   ├── forensic_template.html
+│   │   └── summary_template.json
+│   └── generated/               # Generated reports
+│       ├── analysis_YYYYMMDD_HHMMSS.pdf
+│       ├── detection_report.json
+│       └── ...
+│
+├── tools/                       # Utility scripts and tools
+│   ├── __init__.py
+│   ├── dataset_generator.py     # Generate steganographic test data
+│   ├── batch_analyzer.py        # Batch processing tool
+│   ├── model_trainer.py         # Train ML models
+│   └── benchmark.py             # Performance benchmarking
+│
+├── tests/                       # Unit tests and validation
+│   ├── __init__.py
+│   ├── test_detection.py        # Test detection algorithms
+│   ├── test_ml_models.py        # Test ML models
+│   ├── test_extraction.py       # Test data extraction
+│   └── test_integration.py      # Integration tests
+│
+├── docs/                        # Documentation
+│   ├── api_reference.md         # API documentation
+│   ├── user_guide.md            # User guide
+│   ├── algorithms.md            # Algorithm explanations
+│   └── research_paper.md        # Research documentation
+│
+└── logs/                        # Application logs
+    ├── detection.log
+    ├── training.log
+    └── error.log

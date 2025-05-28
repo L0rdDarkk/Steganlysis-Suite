@@ -1,0 +1,234 @@
+{
+  "report_metadata": {
+    "report_id": "{{report_id}}",
+    "case_id": "{{case_id}}",
+    "report_type": "steganographic_analysis_summary",
+    "version": "1.0",
+    "generated_by": "StegAnalysis Suite v{{version}}",
+    "generation_timestamp": "{{timestamp}}",
+    "analyst": {
+      "name": "{{analyst_name}}",
+      "id": "{{analyst_id}}",
+      "organization": "{{organization}}"
+    }
+  },
+  "analysis_summary": {
+    "total_files_analyzed": "{{total_files}}",
+    "analysis_duration_seconds": "{{analysis_duration}}",
+    "analysis_start_time": "{{start_time}}",
+    "analysis_end_time": "{{end_time}}",
+    "overall_status": "{{overall_status}}",
+    "confidence_score": "{{overall_confidence}}",
+    "steganographic_content_detected": "{{steganographic_detected}}"
+  },
+  "file_statistics": {
+    "total_files": "{{total_files}}",
+    "clean_files": "{{clean_files}}",
+    "suspicious_files": "{{suspicious_files}}",
+    "steganographic_files": "{{steganographic_files}}",
+    "failed_analysis": "{{failed_files}}",
+    "file_formats": {
+      "jpeg": "{{jpeg_count}}",
+      "png": "{{png_count}}",
+      "bmp": "{{bmp_count}}",
+      "tiff": "{{tiff_count}}",
+      "other": "{{other_count}}"
+    },
+    "total_file_size_mb": "{{total_size_mb}}",
+    "average_file_size_kb": "{{avg_size_kb}}"
+  },
+  "detection_methods": {
+    "statistical_analysis": {
+      "chi_square": {
+        "enabled": "{{chi_square_enabled}}",
+        "files_analyzed": "{{chi_square_files}}",
+        "detections": "{{chi_square_detections}}",
+        "accuracy": "{{chi_square_accuracy}}",
+        "processing_time_seconds": "{{chi_square_time}}"
+      },
+      "rs_analysis": {
+        "enabled": "{{rs_enabled}}",
+        "files_analyzed": "{{rs_files}}",
+        "detections": "{{rs_detections}}",
+        "accuracy": "{{rs_accuracy}}",
+        "processing_time_seconds": "{{rs_time}}"
+      },
+      "spa_analysis": {
+        "enabled": "{{spa_enabled}}",
+        "files_analyzed": "{{spa_files}}",
+        "detections": "{{spa_detections}}",
+        "accuracy": "{{spa_accuracy}}",
+        "processing_time_seconds": "{{spa_time}}"
+      }
+    },
+    "machine_learning": {
+      "cnn_detection": {
+        "enabled": "{{cnn_enabled}}",
+        "model_version": "{{cnn_model_version}}",
+        "files_analyzed": "{{cnn_files}}",
+        "detections": "{{cnn_detections}}",
+        "confidence_threshold": "{{cnn_threshold}}",
+        "average_confidence": "{{cnn_avg_confidence}}",
+        "processing_time_seconds": "{{cnn_time}}"
+      },
+      "svm_detection": {
+        "enabled": "{{svm_enabled}}",
+        "model_version": "{{svm_model_version}}",
+        "files_analyzed": "{{svm_files}}",
+        "detections": "{{svm_detections}}",
+        "confidence_threshold": "{{svm_threshold}}",
+        "average_confidence": "{{svm_avg_confidence}}",
+        "processing_time_seconds": "{{svm_time}}"
+      }
+    },
+    "metadata_analysis": {
+      "enabled": "{{metadata_enabled}}",
+      "files_analyzed": "{{metadata_files}}",
+      "anomalies_found": "{{metadata_anomalies}}",
+      "processing_time_seconds": "{{metadata_time}}"
+    }
+  },
+  "steganographic_findings": [
+    {
+      "file_id": "{{file_id}}",
+      "filename": "{{filename}}",
+      "file_path": "{{file_path}}",
+      "file_size_bytes": "{{file_size}}",
+      "file_format": "{{file_format}}",
+      "detection_method": "{{detection_method}}",
+      "steganographic_technique": "{{stego_technique}}",
+      "confidence_score": "{{confidence}}",
+      "estimated_payload_size_bytes": "{{payload_size}}",
+      "embedding_rate": "{{embedding_rate}}",
+      "quality_metrics": {
+        "psnr": "{{psnr}}",
+        "mse": "{{mse}}",
+        "ssim": "{{ssim}}"
+      },
+      "extraction_attempted": "{{extraction_attempted}}",
+      "extraction_successful": "{{extraction_successful}}",
+      "extracted_data_size_bytes": "{{extracted_size}}",
+      "extracted_data_type": "{{extracted_type}}",
+      "encryption_detected": "{{encryption_detected}}",
+      "compression_detected": "{{compression_detected}}",
+      "forensic_markers": {
+        "histogram_anomalies": "{{histogram_anomalies}}",
+        "spatial_correlations": "{{spatial_correlations}}",
+        "frequency_artifacts": "{{frequency_artifacts}}",
+        "metadata_inconsistencies": "{{metadata_inconsistencies}}"
+      },
+      "timestamps": {
+        "file_creation": "{{file_creation}}",
+        "file_modification": "{{file_modification}}",
+        "analysis_time": "{{analysis_timestamp}}"
+      }
+    }
+  ],
+  "performance_metrics": {
+    "system_information": {
+      "operating_system": "{{system_os}}",
+      "python_version": "{{python_version}}",
+      "cpu_model": "{{cpu_model}}",
+      "cpu_cores": "{{cpu_cores}}",
+      "total_memory_gb": "{{total_memory}}",
+      "gpu_available": "{{gpu_available}}",
+      "gpu_model": "{{gpu_model}}"
+    },
+    "processing_performance": {
+      "files_per_second": "{{files_per_second}}",
+      "megabytes_per_second": "{{mb_per_second}}",
+      "average_processing_time_per_file_ms": "{{avg_time_per_file}}",
+      "peak_memory_usage_mb": "{{peak_memory}}",
+      "average_cpu_usage_percent": "{{avg_cpu_usage}}",
+      "gpu_utilization_percent": "{{gpu_utilization}}"
+    },
+    "accuracy_metrics": {
+      "overall_accuracy": "{{overall_accuracy}}",
+      "precision": "{{precision}}",
+      "recall": "{{recall}}",
+      "f1_score": "{{f1_score}}",
+      "false_positive_rate": "{{false_positive_rate}}",
+      "false_negative_rate": "{{false_negative_rate}}"
+    }
+  },
+  "quality_assurance": {
+    "validation_performed": "{{validation_performed}}",
+    "cross_validation_results": {
+      "enabled": "{{cross_validation_enabled}}",
+      "folds": "{{cv_folds}}",
+      "average_accuracy": "{{cv_accuracy}}",
+      "standard_deviation": "{{cv_std_dev}}"
+    },
+    "model_versions": {
+      "cnn_model_hash": "{{cnn_model_hash}}",
+      "svm_model_hash": "{{svm_model_hash}}",
+      "scaler_hash": "{{scaler_hash}}"
+    },
+    "calibration_status": "{{calibration_status}}",
+    "last_calibration_date": "{{last_calibration}}"
+  },
+  "recommendations": {
+    "immediate_actions": [
+      "{{action_1}}",
+      "{{action_2}}",
+      "{{action_3}}"
+    ],
+    "follow_up_analysis": [
+      "{{followup_1}}",
+      "{{followup_2}}"
+    ],
+    "security_recommendations": [
+      "{{security_1}}",
+      "{{security_2}}"
+    ]
+  },
+  "file_details": [
+    {
+      "filename": "{{filename}}",
+      "file_path": "{{file_path}}",
+      "file_size_bytes": "{{file_size}}",
+      "file_format": "{{format}}",
+      "dimensions": "{{dimensions}}",
+      "color_channels": "{{channels}}",
+      "bit_depth": "{{bit_depth}}",
+      "compression": "{{compression}}",
+      "analysis_status": "{{status}}",
+      "confidence_score": "{{confidence}}",
+      "detection_methods_applied": [
+        "{{method_1}}",
+        "{{method_2}}"
+      ],
+      "processing_time_ms": "{{processing_time}}",
+      "anomalies_detected": [
+        "{{anomaly_1}}",
+        "{{anomaly_2}}"
+      ],
+      "metadata_extracted": {
+        "exif_data": "{{exif_available}}",
+        "creation_date": "{{creation_date}}",
+        "camera_model": "{{camera_model}}",
+        "software": "{{software_used}}"
+      },
+      "hash_values": {
+        "md5": "{{md5_hash}}",
+        "sha1": "{{sha1_hash}}",
+        "sha256": "{{sha256_hash}}"
+      }
+    }
+  ],
+  "legal_compliance": {
+    "chain_of_custody_maintained": "{{custody_maintained}}",
+    "evidence_integrity_verified": "{{integrity_verified}}",
+    "forensic_standards_compliance": "{{standards_compliance}}",
+    "data_privacy_protected": "{{privacy_protected}}",
+    "retention_policy_applied": "{{retention_applied}}"
+  },
+  "report_validation": {
+    "reviewed_by": "{{reviewer_name}}",
+    "review_date": "{{review_date}}",
+    "approved_by": "{{approver_name}}",
+    "approval_date": "{{approval_date}}",
+    "report_hash": "{{report_hash}}",
+    "digital_signature": "{{digital_signature}}"
+  }
+}

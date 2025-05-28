@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganalysis Suite Analysis Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            border-left: 4px solid #2a5298;
+            padding-left: 1rem;
+        }
+        
+        .section h2 {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+        
+        .case-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .case-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .case-info td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .case-info td:first-child {
+            font-weight: 600;
+            width: 30%;
+            color: #495057;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .result-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .result-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .metric-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+        }
+        
+        .metric-value.positive {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .metric-value.negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .metric-value.neutral {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        
+        .alert-success {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                       linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                       linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                       linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-style: italic;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .footer {
+            background: #343a40;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .timestamp {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        .confidence-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc3545 0%, #ffc107 50%, #28a745 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .file-list {
+            list-style: none;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .file-list li {
+            padding: 0.5rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .file-status {
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-clean {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-suspicious {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-steganographic {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        @media print {
+            body { 
+                background: white; 
+            }
+            .container { 
+                box-shadow: none; 
+                max-width: none; 
+            }
+            .chart-placeholder {
+                background: none;
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Forensic Analysis Report</h1>
+            <p>Steganographic Content Detection & Analysis</p>
+        </div>
+        
+        <div class="content">
+            <!-- Case Information -->
+            <div class="section">
+                <h2>📋 Case Information</h2>
+                <div class="case-info">
+                    <table>
+                        <tr>
+                            <td>Case ID:</td>
+                            <td>{{case_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Analyst:</td>
+                            <td>{{analyst_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Analysis Date:</td>
+                            <td>{{analysis_date}}</td>
+                        </tr>
+                        <tr>
+                            <td>Software Version:</td>
+                            <td>StegAnalysis Suite v{{version}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Files Analyzed:</td>
+                            <td>{{total_files}}</td>
+                        </tr>
+                        <tr>
+                            <td>Analysis Duration:</td>
+                            <td>{{analysis_duration}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Executive Summary -->
+            <div class="section">
+                <h2>📊 Executive Summary</h2>
+                {{#if steganographic_detected}}
+                <div class="alert alert-danger">
+                    <strong>⚠️ STEGANOGRAPHIC CONTENT DETECTED</strong><br>
+                    {{steganographic_count}} file(s) contain hidden data using steganographic techniques.
+                </div>
+                {{else}}
+                <div class="alert alert-success">
+                    <strong>✅ NO STEGANOGRAPHIC CONTENT DETECTED</strong><br>
+                    All analyzed files appear to be clean with no signs of hidden data.
+                </div>
+                {{/if}}
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>📈 Detection Statistics</h3>
+                        <div class="metric">
+                            <span class="metric-label">Clean Files:</span>
+                            <span class="metric-value positive">{{clean_files}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Suspicious Files:</span>
+                            <span class="metric-value neutral">{{suspicious_files}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Steganographic Files:</span>
+                            <span class="metric-value negative">{{steganographic_files}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>🎯 Overall Confidence</h3>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: {{overall_confidence}}%"></div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Confidence Score:</span>
+                            <span class="metric-value">{{overall_confidence}}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detection Methods Used -->
+            <div class="section">
+                <h2>🔬 Detection Methods Applied</h2>
+                <div class="results-grid">
+                    {{#each detection_methods}}
+                    <div class="result-card">
+                        <h3>{{name}}</h3>
+                        <div class="metric">
+                            <span class="metric-label">Status:</span>
+                            <span class="metric-value {{status_class}}">{{status}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Accuracy:</span>
+                            <span class="metric-value">{{accuracy}}%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Processing Time:</span>
+                            <span class="metric-value">{{processing_time}}s</span>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            
+            <!-- File Analysis Results -->
+            <div class="section">
+                <h2>📁 Individual File Results</h2>
+                <ul class="file-list">
+                    {{#each analyzed_files}}
+                    <li>
+                        <div>
+                            <strong>{{filename}}</strong><br>
+                            <small class="timestamp">{{file_size}} | {{format}} | Analyzed: {{analysis_time}}</small>
+                        </div>
+                        <span class="file-status status-{{status_class}}">{{status}}</span>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            
+            <!-- Detailed Findings -->
+            {{#if steganographic_detected}}
+            <div class="section">
+                <h2>🔍 Detailed Findings</h2>
+                {{#each steganographic_findings}}
+                <div class="result-card">
+                    <h3>{{filename}}</h3>
+                    <div class="alert alert-danger">
+                        <strong>Steganographic Method Detected:</strong> {{method}}<br>
+                        <strong>Confidence:</strong> {{confidence}}%<br>
+                        <strong>Estimated Payload Size:</strong> {{payload_size}} bytes
+                    </div>
+                    
+                    {{#if extraction_attempted}}
+                    <div class="metric">
+                        <span class="metric-label">Data Extraction:</span>
+                        <span class="metric-value {{extraction_status_class}}">{{extraction_status}}</span>
+                    </div>
+                    {{/if}}
+                    
+                    <div class="chart-placeholder">
+                        Statistical Analysis Chart for {{filename}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+            
+            <!-- Recommendations -->
+            <div class="section">
+                <h2>💡 Recommendations</h2>
+                {{#if steganographic_detected}}
+                <div class="alert alert-warning">
+                    <strong>Immediate Actions Required:</strong>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Isolate suspicious files for further investigation</li>
+                        <li>Attempt data extraction with appropriate tools</li>
+                        <li>Document chain of custody for forensic evidence</li>
+                        <li>Consider advanced analysis techniques if standard methods fail</li>
+                    </ul>
+                </div>
+                {{else}}
+                <div class="alert alert-success">
+                    <strong>No Immediate Action Required:</strong><br>
+                    All analyzed files appear clean. Continue regular monitoring and periodic analysis.
+                </div>
+                {{/if}}
+            </div>
+            
+            <!-- Technical Details -->
+            <div class="section">
+                <h2>⚙️ Technical Analysis Details</h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>System Information</h3>
+                        <div class="metric">
+                            <span class="metric-label">OS:</span>
+                            <span class="metric-value">{{system_os}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Python Version:</span>
+                            <span class="metric-value">{{python_version}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">GPU Acceleration:</span>
+                            <span class="metric-value">{{gpu_enabled}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>Performance Metrics</h3>
+                        <div class="metric">
+                            <span class="metric-label">Files/Second:</span>
+                            <span class="metric-value">{{processing_speed}}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Memory Usage:</span>
+                            <span class="metric-value">{{memory_usage}} MB</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">CPU Usage:</span>
+                            <span class="metric-value">{{cpu_usage}}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Generated by StegAnalysis Suite | 📧 Contact: forensics@steganalysis.com</p>
+            <p class="timestamp">Report generate
